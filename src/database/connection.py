@@ -66,13 +66,28 @@ def execute_query(query, params=None):
 
 # select_abilities()
 
+# def joined_tables():
+#          query = """
+#             SELECT heros.id, relationships.relationship_type.id,
+#             FROM heroes,
+#             JOIN relationships,
+#             ON heroes.id = relationships.relationship_type.id;
+#         """
 
-def select_two():
-    query = """
-        SELECT heroes.name, ability_types.name FROM heroes, ability_types
-    """
+# new_table = execute_query(query).fetchall()
+# print(new_table)
 
-    combined = execute_query(query).fetchall()
-    print(combined)
+# joined_tables()
 
-select_two()
+# def new_table():
+#     query = """
+#     SELECT heroes.id, abilities.id,
+#     FROM heroes, abilities,
+#     WHERE heroes.id = abilities.id
+#     """
+
+# newtable = execute_query(query).fetchall()
+# print(newtable)
+
+# new_table()
+ 
