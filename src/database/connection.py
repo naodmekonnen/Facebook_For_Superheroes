@@ -65,6 +65,7 @@ def update_bio(name,bio):
     return new_update    
     print("Your hero can't keep their story straight")
 
+##DELETE##
 
 def cancel_hero(name):
     execute_query("""
