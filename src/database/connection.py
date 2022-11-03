@@ -59,9 +59,10 @@ def update_bio(name,bio):
     new_update = execute_query(""" 
     UPDATE heroes
     SET biography = %s
-    WHERE name = %s
-    """, [name,bio])
-    print(new_update)    
+    WHERE %s = heroes.name
+
+    """, [bio,name])
+    return new_update    
     print("Your hero can't keep their story straight")
 
 
