@@ -43,26 +43,26 @@ def create_hero(name,about,bio):
     """,[name, about, bio])
 
 
-##READ##
-
-# def find_hero(hero):
-#     the_hero = execute_query("""
-#     SELECT name, about_me, biography
-#     FROM heroes
-#     WHERE name = %s""",[hero,]).fetchone()
-#     print(the_hero)
-
-
+#READ##
 
 def find_hero(hero):
     the_hero = execute_query("""
-    SELECT heroes.name, ability_types.name
+    SELECT name, about_me, biography
     FROM heroes
-    JOIN abilities ON heroes.id = abilities.hero_id
-    JOIN ability_types ON ability_types.id = abilities.ability_type_id
-    WHERE name = %s
-    """,[hero,]).fetchone()
+    WHERE name = %s""",[hero,]).fetchone()
     print(the_hero)
+
+
+
+# def find_hero(hero):
+#     the_hero = execute_query("""
+#     SELECT heroes.name, ability_types.name
+#     FROM heroes
+#     JOIN abilities ON heroes.id = abilities.hero_id
+#     JOIN ability_types ON ability_types.id = abilities.ability_type_id
+#     WHERE name = %s
+#     """,[hero,]).fetchone()
+#     print(the_hero)
 
 
 
