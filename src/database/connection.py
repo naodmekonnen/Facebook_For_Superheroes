@@ -112,7 +112,7 @@ def execute_query(query, params=None):
 
 def create_hero(name,about,bio):
     execute_query("""
-    INSERT INTO heroes(name, about_me, biogrpahy)
+    INSERT INTO heroes(name, about_me, biography)
     VALUES(%s,%s,%s)
     """,[name, about, bio])
 
@@ -121,12 +121,13 @@ def create_hero(name,about,bio):
 # what parameters am I going to pass in?
 # also change to the correct column names
 
-def find_hero():
+def find_hero(hero):
     the_hero = execute_query("""
     SELECT name, biography
     FROM heroes
-    WHERE name LIKE %s""").fetchone()
-    return the_hero
+    WHERE name = %s""",[hero,]).fetchone()
+    print(the_hero)
+
 
 ##UPDATE##
 # what parameters am I going to pass in?
@@ -161,42 +162,39 @@ def cancel_hero(name):
 ## prompt user to make selections and will invoke one of the CRUD functions based on their selection ##
 
 def main_function():
-    user_choice = input('Please make a selection: ')
-    1: find a Hero
-    2: create your own Hero
-    3: change hero\'s story
-    4: cancel a hero
-
-if user_choice == '1':
-    print('enter a name')
-    hero = input()
-    find_hero()
-    main_function()
-
-elif user_choice == '2':
-    print('enter a name')
-    hero_name = input()
-    print('what can they do?')
-    hero_ability = input()
-    print("What's their story?")
-    hero_bio = input()
-    create_hero(name,about,bio)
-    main_function()
-
-elif user_choice == '3':
-    update = input('What would you like to change?')
-    name = input()
-    print('enter a new name')
-    update_bio()
-    main_function(name)
-
-elif user_choice == '4':
-    print('which hero would you like to cancel?')
-    name = input()
-    cancel_hero()
-    main_function()
+    user_choice = input("Please make a selection? 1: find a Hero \n  2: create your own Hero 3: change a story 4: cancel a hero \n")
 
 
+    if user_choice == '1':
+        print('enter a name')
+        hero = input()
+        find_hero(hero)
+        main_function()
 
+    elif user_choice == '2':
+        print('enter a name')
+        hero_name = input()
+        print('what can they do?')
+        hero_ability = input()
+        print("What's their story?")
+        hero_bio = input()
+        create_hero(hero_name,hero_ability,hero_bio)
+        main_function()
+
+    elif user_choice == '3':
+        update = input('What would you like to change?')
+        name = input()
+        print('enter a new name')
+        update_bio(name)
+        main_function()
+
+    elif user_choice == '4':
+        print('which hero would you like to cancel?')
+        name = input()
+        cancel_hero()
+        main_function()
+
+
+main_function()
 
 
