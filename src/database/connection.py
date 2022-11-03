@@ -29,86 +29,12 @@ def execute_query(query, params=None):
     except OSError as e:
         print(f"The error '{e}' occurred or the hero name is already taken")
 
-    
-
-
-# def select_all():
-#     query = """
-#         SELECT * from heroes
-#     """
-
-#     list_of_heroes = execute_query(query).fetchall()
-#     print(list_of_heroes)
-#     for record in list_of_heroes:
-#         print(record[1])
-
-# select_all()
-
-# def select_some():
-#     query = """
-#         SELECT * from relationships
-#     """
-
-#     relationship_list = execute_query(query).fetchall()
-#     print(relationship_list)
-#     for record in relationship_list:
-#         print(record)
-
-# select_some()
-
-# def select_abilities():
-#     query = """
-#         SELECT * from ability_types
-#     """
-
-#     abilities = execute_query(query).fetchall()
-#     print(abilities)
-
-# select_abilities()
-
-# def joined_tables():
-#          query = """
-#             SELECT heros.id, relationships.relationship_type.id,
-#             FROM heroes,
-#             JOIN relationships,
-#             ON heroes.id = relationships.relationship_type.id;
-#         """
-
-# new_table = execute_query(query).fetchall()
-# print(new_table)
-
-# joined_tables()
-
-# def new_table():
-#     query = """
-#     SELECT heroes.id, abilities.id,
-#     FROM heroes, abilities,
-#     WHERE heroes.id = abilities.id
-#     """
-
-# newtable = execute_query(query).fetchall()
-# print(newtable)
-
-# new_table()
- 
-# def my_function():
-#      user_selection = input("""
-#         READ:Learn about SQL Heroes
-#         CREATE:Create a Hero
-#         UPDATE:Add an ability
-#         DELETE:Eliminate a Hero
-    
-#     """)
-# my_function()
 
 ####################
 ## CRUD FUNCTIONS ##
 ####################
 
 ##CREATE##
-
-# what parameters am I going to pass in?
-# also change to the correct column names
 
 def create_hero(name,about,bio):
     execute_query("""
@@ -118,8 +44,6 @@ def create_hero(name,about,bio):
 
 
 ##READ##
-# what parameters am I going to pass in?
-# also change to the correct column names
 
 def find_hero(hero):
     the_hero = execute_query("""
@@ -130,36 +54,31 @@ def find_hero(hero):
 
 
 ##UPDATE##
-# what parameters am I going to pass in?
-# also change to the correct column names
 
 def update_bio(name,bio):
     new_update = execute_query(""" 
     UPDATE heroes
-    SET biography = %s
+    SET about_me = %s
     WHERE name = %s
     """, [name,bio])
-    return new_update
+    print(new_update)
     print("Your hero can't keep their story straight")
 
-
-##DELETE##
-# what parameters am I going to pass in?
-# also change to the correct column names
 
 def cancel_hero(name):
     execute_query("""
     DELETE FROM heroes
-    WHERE name = %s    
+    WHERE name = %s
+
     """,[name])
     print("Your hero has been cancelled")
 
 
 ###########################
-## USER INPUT FUNCTIONS ##
+## USER INPUT FUNCTION  ##
 ##########################
 
-## prompt user to make selections and will invoke one of the CRUD functions based on their selection ##
+## prompts user to make selections and will invoke one of the CRUD functions based on their selection ##
 
 def main_function():
     user_choice = input("Please make a selection? \n 1: find a Hero \n 2: create your own Hero \n 3: change a story \n 4: cancel a hero \n")
@@ -192,7 +111,7 @@ def main_function():
     elif user_choice == '4':
         print('which hero would you like to cancel?')
         name = input()
-        cancel_hero()
+        cancel_hero(name)
         main_function()
 
 
