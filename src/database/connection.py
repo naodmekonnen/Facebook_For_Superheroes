@@ -123,7 +123,7 @@ def create_hero(name,about,bio):
 
 def find_hero(hero):
     the_hero = execute_query("""
-    SELECT name, biography
+    SELECT name, about_me, biography
     FROM heroes
     WHERE name = %s""",[hero,]).fetchone()
     print(the_hero)
@@ -133,13 +133,13 @@ def find_hero(hero):
 # what parameters am I going to pass in?
 # also change to the correct column names
 
-def update_bio(name):
-    new_bio = execute_query(""" 
+def update_bio(name,bio):
+    new_update = execute_query(""" 
     UPDATE heroes
-    SET biography = %s
+    SET name = %s
     WHERE name = %s
     """, [name])
-    return new_bio
+    return new_update
     print("Your hero can't keep their story straight")
 
 
@@ -162,7 +162,7 @@ def cancel_hero(name):
 ## prompt user to make selections and will invoke one of the CRUD functions based on their selection ##
 
 def main_function():
-    user_choice = input("Please make a selection? 1: find a Hero \n  2: create your own Hero 3: change a story 4: cancel a hero \n")
+    user_choice = input("Please make a selection? \n 1: find a Hero \n 2: create your own Hero \n 3: change a story \n 4: cancel a hero \n")
 
 
     if user_choice == '1':
@@ -182,7 +182,7 @@ def main_function():
         main_function()
 
     elif user_choice == '3':
-        update = input('What would you like to change?')
+        update = input('Whose name would you like to change?')
         name = input()
         print('enter a new name')
         update_bio(name)
