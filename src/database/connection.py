@@ -70,7 +70,6 @@ def cancel_hero(name):
     execute_query("""
     DELETE FROM heroes
     WHERE name = %s
-
     """,[name])
     print("Your hero has been cancelled")
 
