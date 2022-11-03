@@ -136,9 +136,9 @@ def find_hero(hero):
 def update_bio(name,bio):
     new_update = execute_query(""" 
     UPDATE heroes
-    SET name = %s
+    SET biography = %s
     WHERE name = %s
-    """, [name])
+    """, [name,bio])
     return new_update
     print("Your hero can't keep their story straight")
 
@@ -182,10 +182,11 @@ def main_function():
         main_function()
 
     elif user_choice == '3':
-        update = input('Whose name would you like to change?')
+        update = input('Whose story would you like to change?')
         name = input()
-        print('enter a new name')
-        update_bio(name)
+        print('enter a new bio')
+        bio = input()
+        update_bio(name,bio)
         main_function()
 
     elif user_choice == '4':
