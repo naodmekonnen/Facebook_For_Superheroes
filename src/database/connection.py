@@ -91,15 +91,15 @@ def execute_query(query, params=None):
 
 # new_table()
  
-def my_function():
-     user_selection = input("""
-        READ:Learn about SQL Heroes
-        CREATE:Create a Hero
-        UPDATE:Add an ability
-        DELETE:Eliminate a Hero
+# def my_function():
+#      user_selection = input("""
+#         READ:Learn about SQL Heroes
+#         CREATE:Create a Hero
+#         UPDATE:Add an ability
+#         DELETE:Eliminate a Hero
     
-    """)
-my_function()
+#     """)
+# my_function()
 
 ####################
 ## CRUD FUNCTIONS ##
@@ -110,11 +110,11 @@ my_function()
 # what parameters am I going to pass in?
 # also change to the correct column names
 
-def create_hero():
+def create_hero(name,about,bio):
     execute_query("""
-    INSERT INTO heroes
+    INSERT INTO heroes(name, about_me, biogrpahy)
     VALUES(%s,%s,%s)
-    """,[])
+    """,[name, about, bio])
 
 
 ##READ##
@@ -132,12 +132,12 @@ def find_hero():
 # what parameters am I going to pass in?
 # also change to the correct column names
 
-def update_bio():
+def update_bio(name):
     new_bio = execute_query(""" 
     UPDATE heroes
     SET biography = %s
     WHERE name = %s
-    """, [])
+    """, [name])
     return new_bio
     print("Your hero can't keep their story straight")
 
@@ -146,7 +146,7 @@ def update_bio():
 # what parameters am I going to pass in?
 # also change to the correct column names
 
-def cancel_hero():
+def cancel_hero(name):
     execute_query("""
     DELETE FROM heroes
     WHERE name = %s    
@@ -180,7 +180,7 @@ elif user_choice == '2':
     hero_ability = input()
     print("What's their story?")
     hero_bio = input()
-    create_hero()
+    create_hero(name,about,bio)
     main_function()
 
 elif user_choice == '3':
@@ -188,7 +188,7 @@ elif user_choice == '3':
     name = input()
     print('enter a new name')
     update_bio()
-    main_function()
+    main_function(name)
 
 elif user_choice == '4':
     print('which hero would you like to cancel?')
