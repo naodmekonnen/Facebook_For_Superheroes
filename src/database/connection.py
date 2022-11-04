@@ -52,19 +52,6 @@ def find_hero(hero):
     print(the_hero)
 
 
-
-# def find_hero(hero):
-#     the_hero = execute_query("""
-#     SELECT heroes.name, ability_types.name
-#     FROM heroes
-#     JOIN abilities ON heroes.id = abilities.hero_id
-#     JOIN ability_types ON ability_types.id = abilities.ability_type_id
-#     WHERE name = %s
-#     """,[hero,]).fetchone()
-#     print(the_hero)
-
-
-
 ##UPDATE##
 
 def update_bio(name,bio):
@@ -86,6 +73,7 @@ def cancel_hero(name):
     """,[name])
     print("Your hero has been cancelled")
 
+## SEE ABILITIES##
 
 def hero_abilities(name):
     hero_skill = execute_query("""
@@ -93,16 +81,27 @@ def hero_abilities(name):
     FROM heroes 
     JOIN abilities ON heroes.id = abilities.hero_id
     JOIN ability_types ON ability_types.id = abilities.ability_type_id
-    WHERE heroes.name = %s
-    """,[name])
+    WHERE heroes.name = %s""",[name]).fetchone()
     print(hero_skill)
+
+
+## SEE RELATIONSHIPS##
+
+def show_friends(): 
+    friends = execute_query("""
+    SELECT h_1.name, r_type.name, h_2.name FROM relationship_types r_type
+    JOIN relationships r ON r_type.id = r.relationship_type_id
+    JOIN heroes h_1 ON r.hero1_id = h_1.id 
+    JOIN heroes h_2 ON r.hero2_id = h_2.id
+    ORDER BY r_type.name DESC;""",[]).fetchall()
+    print(friends)
 
 
 ## USER INPUT FUNCTION  ##
 ## prompts user to make selections and will invoke one of the CRUD functions based on their selection ##
 
 def main_function():
-    user_choice = input("Please make a selection? \n 1: find a Hero \n 2: create your own Hero \n 3: change a story \n 4: cancel a hero \n 5:see abilities \n")
+    user_choice = input("Please make a selection? \n 1: find a Hero \n 2: create your own Hero \n 3: change a story \n 4: cancel a hero \n 5: see abilities \n 6: see relationships")
 
 
     if user_choice == '1':
@@ -124,11 +123,8 @@ def main_function():
    
 
     elif user_choice == '3':
-        # update = input('Whose story would you like to change?')
         print('Whose story would you like to change?')
         name = input()
-        # print('give a new tagline')
-        # about = input()
         print('enter a new bio')
         bio = input()
         update_bio(name,bio)
@@ -146,34 +142,13 @@ def main_function():
         hero_abilities(name)
         main_function()
 
-    # else:
-    #     print('Invalid entry')
-    #     main_function()
-
-        
+    elif user_choice == '6':
+         show_friends()
+         main_function()
+    
 main_function()
 
 
-## RELATIONSHIPS ##
-
-# def friends(params):
-#     besties = execute_query(""" 
-#     SELECT name FROM heroes
-#     WHERE id IN(SELECT hero2_id FROM relationship_type_id = 1)
-#     """,[params])
-
-# friends(params)
-
-# SELECT heroes.name, ability_types.name
-#             FROM heroes
-#             JOIN abilities ON heroes.id = abilities.hero_id
-#             JOIN ability_types ON ability_types.id = abilities.ability_type_id
 
 
 
-# def show_friends(): 
-#     print(execute_query("""SELECT h1.name, rt.name, h2.name FROM relationship_types rt
-#                             JOIN relationships r ON rt.id = r.relationship_type_id
-#                             JOIN heroes h1 ON r.hero1_id = h1.id 
-#                             JOIN heroes h2 ON r.hero2_id = h2.id
-#                             ORDER BY rt.name DESC;""").fetchall())
