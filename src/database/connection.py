@@ -51,6 +51,28 @@ def find_hero(hero):
     WHERE name = %s""",[hero,]).fetchone()
     print(the_hero)
 
+## SEE ABILITIES##
+
+def hero_abilities(name):
+    hero_skill = execute_query("""
+    SELECT heroes.name,ability_types.name
+    FROM heroes 
+    JOIN abilities ON heroes.id = abilities.hero_id
+    JOIN ability_types ON ability_types.id = abilities.ability_type_id
+    WHERE heroes.name = %s""",[name]).fetchone()
+    print(hero_skill)
+
+## SEE RELATIONSHIPS##
+
+def show_friends(): 
+    friends = execute_query("""
+    SELECT h_1.name, r_type.name, h_2.name FROM relationship_types r_type
+    JOIN relationships r_ship ON r_type.id = r_ship.relationship_type_id
+    JOIN heroes h_1 ON r_ship.hero1_id = h_1.id 
+    JOIN heroes h_2 ON r_ship.hero2_id = h_2.id
+    ORDER BY r_type.name DESC;""",[]).fetchall()
+    print(friends)
+
 
 ##UPDATE##
 
@@ -59,7 +81,6 @@ def update_bio(name,bio):
     UPDATE heroes
     SET biography = %s
     WHERE %s = heroes.name
-
     """, [bio,name])
     return new_update    
     print("Your hero can't keep their story straight")
@@ -73,28 +94,6 @@ def cancel_hero(name):
     """,[name])
     print("Your hero has been cancelled")
 
-## SEE ABILITIES##
-
-def hero_abilities(name):
-    hero_skill = execute_query("""
-    SELECT heroes.name,ability_types.name
-    FROM heroes 
-    JOIN abilities ON heroes.id = abilities.hero_id
-    JOIN ability_types ON ability_types.id = abilities.ability_type_id
-    WHERE heroes.name = %s""",[name]).fetchone()
-    print(hero_skill)
-
-
-## SEE RELATIONSHIPS##
-
-def show_friends(): 
-    friends = execute_query("""
-    SELECT h_1.name, r_type.name, h_2.name FROM relationship_types r_type
-    JOIN relationships r ON r_type.id = r.relationship_type_id
-    JOIN heroes h_1 ON r.hero1_id = h_1.id 
-    JOIN heroes h_2 ON r.hero2_id = h_2.id
-    ORDER BY r_type.name DESC;""",[]).fetchall()
-    print(friends)
 
 
 ## USER INPUT FUNCTION  ##
