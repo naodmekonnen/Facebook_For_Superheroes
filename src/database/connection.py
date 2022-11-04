@@ -30,9 +30,8 @@ def execute_query(query, params=None):
         print(f"The error '{e}' occurred or the hero name is already taken")
 
 
-####################
 ## CRUD FUNCTIONS ##
-####################
+
 
 ##CREATE##
 
@@ -88,14 +87,22 @@ def cancel_hero(name):
     print("Your hero has been cancelled")
 
 
-###########################
-## USER INPUT FUNCTION  ##
-##########################
+def hero_abilities(name):
+    hero_skill = execute_query("""
+    SELECT heroes.name,ability_types.name
+    FROM heroes 
+    JOIN abilities ON heroes.id = abilities.hero_id
+    JOIN ability_types ON ability_types.id = abilities.ability_type_id
+    WHERE heroes.name = %s
+    """,[name])
+    print(hero_skill)
 
+
+## USER INPUT FUNCTION  ##
 ## prompts user to make selections and will invoke one of the CRUD functions based on their selection ##
 
 def main_function():
-    user_choice = input("Please make a selection? \n 1: find a Hero \n 2: create your own Hero \n 3: change a story \n 4: cancel a hero \n")
+    user_choice = input("Please make a selection? \n 1: find a Hero \n 2: create your own Hero \n 3: change a story \n 4: cancel a hero \n 5:see abilities \n")
 
 
     if user_choice == '1':
@@ -114,6 +121,8 @@ def main_function():
         create_hero(hero_name,hero_ability,hero_bio)
         main_function()
 
+   
+
     elif user_choice == '3':
         # update = input('Whose story would you like to change?')
         print('Whose story would you like to change?')
@@ -131,23 +140,40 @@ def main_function():
         cancel_hero(name)
         main_function()
 
+    elif user_choice == '5':
+        print('Enter a hero name')
+        name = input()
+        hero_abilities(name)
+        main_function()
 
+    # else:
+    #     print('Invalid entry')
+    #     main_function()
+
+        
 main_function()
 
 
-###################
 ## RELATIONSHIPS ##
-###################
 
-def friends(params):
-    besties = execute_query(""" 
-    SELECT name FROM heroes
-    WHERE id IN(SELECT hero2_id FROM relationship_type_id = 1)
-    """,[params])
+# def friends(params):
+#     besties = execute_query(""" 
+#     SELECT name FROM heroes
+#     WHERE id IN(SELECT hero2_id FROM relationship_type_id = 1)
+#     """,[params])
 
-friends(params)
+# friends(params)
 
 # SELECT heroes.name, ability_types.name
 #             FROM heroes
 #             JOIN abilities ON heroes.id = abilities.hero_id
 #             JOIN ability_types ON ability_types.id = abilities.ability_type_id
+
+
+
+# def show_friends(): 
+#     print(execute_query("""SELECT h1.name, rt.name, h2.name FROM relationship_types rt
+#                             JOIN relationships r ON rt.id = r.relationship_type_id
+#                             JOIN heroes h1 ON r.hero1_id = h1.id 
+#                             JOIN heroes h2 ON r.hero2_id = h2.id
+#                             ORDER BY rt.name DESC;""").fetchall())
