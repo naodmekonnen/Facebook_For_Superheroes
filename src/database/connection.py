@@ -82,8 +82,8 @@ def update_bio(name,bio):
     SET biography = %s
     WHERE %s = heroes.name
     """, [bio,name])
-    return new_update    
     print("Your hero can't keep their story straight")
+    return new_update    
 
 ##DELETE##
 
